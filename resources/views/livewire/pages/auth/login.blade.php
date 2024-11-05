@@ -62,7 +62,7 @@ new #[Layout('layouts.guest')] class extends Component
         </div>
 
         <!-- Remember Me -->
-        <div class="flex items-center">
+        {{-- <div class="flex items-center">
             <label for="remember" class="inline-flex items-center text-gray-700">
                 <input
                     wire:model="form.remember"
@@ -72,16 +72,17 @@ new #[Layout('layouts.guest')] class extends Component
                 />
                 <span class="ml-2">{{ __('Remember me') }}</span>
             </label>
-        </div>
+        </div> --}}
 
         <!-- Forgot Password and Submit Button -->
-        <div class="flex items-center justify-between">
-            @if (Route::has('password.request'))
+        <div class="flex items-center justify-between gap-8">
+            {{-- @if (Route::has('password.request'))
                 <a href="{{ route('password.request') }}" wire:navigate class="text-sm text-teal-600 hover:underline">
                     {{ __('Forgot your password?') }}
                 </a>
-            @endif
+            @endif --}}
 
+            <a href="{{route('register')}}">Don't have an account? </a>
             <x-primary-button class="px-6 py-3 rounded-lg text-white bg-teal-600 hover:bg-teal-700">
                 {{ __('Log in') }}
             </x-primary-button>

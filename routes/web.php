@@ -4,7 +4,11 @@ use App\Http\Middleware\user;
 use Illuminate\Support\Facades\Auth;
 use Illuminate\Support\Facades\Route;
 
-Route::view('/', 'welcome');
+Route::get('/', function () {
+    return redirect()->route('login');
+});
+
+
 
 // Route::view('dashboard', 'dashboard')
 //     ->middleware(['auth', 'verified'])
@@ -14,6 +18,9 @@ Route::view('/', 'welcome');
 //     ->middleware(['auth'])
 //     ->name('profile');
 
+Route::get('/', function () {
+    return redirect()->route('login');
+});
 
 Route::middleware(['auth'])->group(function () {
     Route::get('/dashboard', function () {
@@ -53,6 +60,7 @@ Route::prefix('user')->middleware(['auth', user::class])->group(function () {
 
 
 });
+
 
 Route::post('/logout', function () {
     Auth::logout();
