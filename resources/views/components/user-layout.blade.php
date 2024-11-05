@@ -36,10 +36,10 @@
             </div>
             <nav :class="{'flex': open, 'hidden': !open}" class="flex-col items-center flex-grow hidden gap-6 p-4 text-sm font-medium text-gray-700 md:flex md:flex-row lg:gap-10 md:w-auto">
                 <a class="hover:text-green-600 focus:outline-none transition-colors" href="#">Home</a>
-                <a class="hover:text-green-600 focus:outline-none transition-colors" href="#">Search</a>
+                <a class="hover:text-green-600 focus:outline-none transition-colors" href="{{route('user.dormitory')}}">Search</a>
                 <a class="hover:text-green-600 focus:outline-none transition-colors" href="#">My Favorites</a>
 
-                <!-- Logout button aligned to the right -->
+
                 <form method="POST" action="{{route('logout')}}" class="ml-auto">
                     @csrf
                     <button type="submit" class="px-4 py-2 text-white bg-red-600 rounded-md hover:bg-red-700 transition-colors">Logout</button>

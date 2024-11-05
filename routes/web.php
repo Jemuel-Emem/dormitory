@@ -31,6 +31,10 @@ Route::prefix('admin')->middleware(['auth', admin::class])->group(function () {
         return view('admin.index');
     })->name('Admindashboard');
 
+    Route::get('/admin.dormitory', function () {
+        return view('admin.add-dorm');
+    })->name('admin.add-dorm');
+
 
 });
 
@@ -39,6 +43,11 @@ Route::prefix('user')->middleware(['auth', user::class])->group(function () {
     Route::get('/dashboard', function () {
         return view('user.index');
     })->name('user-dashboard');
+
+
+    Route::get('/user.dormitory', function () {
+        return view('user.dormitory');
+    })->name('user.dormitory');
 
 
 

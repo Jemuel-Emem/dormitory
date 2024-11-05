@@ -30,7 +30,7 @@
             <a href="/" wire:navigate>
                 <img src="{{ asset('images/logo.png') }}" class="w-24 h-24 border-4 border-white rounded-full shadow-lg" alt="Logo">
             </a>
-            <h1 class="text-3xl font-semibold text-white">BHOUSE DIRECTORY</h1>
+            <h1 class="text-3xl font-semibold text-white">DORMITORY DIRECTORY</h1>
         </div>
 
         <div class="w-7/12 mt-6 px-8 py-6 bg-white bg-opacity-90 shadow-lg rounded-lg backdrop-blur">
