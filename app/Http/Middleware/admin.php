@@ -19,6 +19,6 @@ class admin
             return $next($request);
         }
 
-        return redirect('dashboard');
+        //return redirect('Adminddashboard');
     }
 }

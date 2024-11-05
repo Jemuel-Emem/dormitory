@@ -69,19 +69,20 @@
         }
         .logout-button {
         position: fixed;
-        width: 200px;
-        top: 1rem;
-        right: 1rem;
-        background-color: #c00d0d;
-        color: white; /* Keep text color white */
-        padding: 0.75rem 1.5rem;
-        border-radius: 0.5rem;
-        font-weight: bold;
-        text-decoration: none;
-        transition: background-color 0.3s;
+        top: 1.5rem;
+        right: 1.5rem;
+        background-color: #4CAF50; /* Dark green */
+        color: white;
+        padding: 0.5rem 1.25rem;
+        border-radius: 0.375rem;
+        display: flex;
+        align-items: center;
+        font-size: 1rem;
+        transition: background-color 0.3s, box-shadow 0.3s;
     }
     .logout-button:hover {
-        background-color: #580402; /* Bright green on hover */
+        background-color: #388E3C; /* Slightly darker green */
+        box-shadow: 0 4px 12px rgba(0, 0, 0, 0.15); /* Shadow effect */
     }
     </style>
 </head>
@@ -137,7 +138,10 @@
 
     <form method="POST" action="{{ route('logout') }}">
         @csrf
-        <button type="submit" class="text-red-500 logout-button">Logout</button>
+        <button type="submit" class="logout-button flex items-center justify-center px-4 py-2 bg-green-600 text-white font-bold rounded-md hover:bg-green-700 transition duration-300">
+            <i class="ri-logout-box-r-line text-xl mr-2 text-red-500"></i>
+            Logout
+        </button>
     </form>
 </body>
 </html>

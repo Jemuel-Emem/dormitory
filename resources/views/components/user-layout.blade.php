@@ -35,7 +35,7 @@
                 </button>
             </div>
             <nav :class="{'flex': open, 'hidden': !open}" class="flex-col items-center flex-grow hidden gap-6 p-4 text-sm font-medium text-gray-700 md:flex md:flex-row lg:gap-10 md:w-auto">
-                <a class="hover:text-green-600 focus:outline-none transition-colors" href="#">Home</a>
+                <a class="hover:text-green-600 focus:outline-none transition-colors" href="{{route('dashboard')}}">Home</a>
                 <a class="hover:text-green-600 focus:outline-none transition-colors" href="{{route('user.dormitory')}}">Search</a>
                 <a class="hover:text-green-600 focus:outline-none transition-colors" href="#">My Favorites</a>
 

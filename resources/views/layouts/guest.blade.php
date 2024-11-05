@@ -15,17 +15,10 @@
     @vite(['resources/css/app.css', 'resources/js/app.js'])
 
     <!-- Styles -->
-    <style>
-        body {
-            background-image: url('{{ asset('images/bg.jpg') }}');
-            background-size: cover;
-            background-position: center;
-            background-attachment: fixed;
-        }
-    </style>
+
 </head>
-<body class="font-sans text-gray-900 antialiased">
-    <div class="min-h-screen flex flex-col sm:justify-center items-center pt-6 sm:pt-0 bg-opacity-80 bg-gray-900/50">
+<body class="font-sans text-gray-900 antialiased bg-cover bg-center bg-fixed bg-no-repeat" style="background-image: url('{{ asset('images/bg.jpg') }}');">
+    <div class="min-h-screen flex flex-col items-center pt-6 sm:pt-0 bg-gray-900/50 backdrop-blur-sm">
         <div class="flex flex-col items-center space-y-4">
             <a href="/" wire:navigate>
                 <img src="{{ asset('images/logo.png') }}" class="w-24 h-24 border-4 border-white rounded-full shadow-lg" alt="Logo">
@@ -33,11 +26,12 @@
             <h1 class="text-3xl font-semibold text-white">DORMITORY DIRECTORY</h1>
         </div>
 
-        <div class="w-7/12 mt-6 px-8 py-6 bg-white bg-opacity-90 shadow-lg rounded-lg backdrop-blur">
+        <div class="w-fit mt-6 px-8 py-6 bg-white bg-opacity-90 shadow-lg rounded-lg">
             {{ $slot }}
         </div>
-
-
     </div>
+</body>
+
+
 </body>
 </html>
