@@ -19,6 +19,6 @@ class user
             return $next($request);
         }
 
-        return redirect('dashboardd');
+        return redirect('dashboard');
     }
 }
