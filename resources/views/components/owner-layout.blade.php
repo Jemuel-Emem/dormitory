@@ -125,6 +125,14 @@
                     </a>
                 </li>
 
+                <li>
+                    <a href="{{route('owner.payment')}}" class="flex items-center p-2 rounded-lg hover:bg-gray-700 ">
+                        <i class="ri-user-add-fill text-red-500"></i>
+
+                        <span class="ms-3 text-gray-500">Monthly Bills</span>
+                    </a>
+                </li>
+
 
 
 
