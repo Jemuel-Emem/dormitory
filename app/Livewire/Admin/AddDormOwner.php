@@ -23,7 +23,7 @@ class AddDormOwner extends Component
     public function render()
     {
         return view('livewire.admin.add-dorm-owner', [
-            'owners' => DormOwner::all(),
+            'owners' => DormOwner::where('is_admin', 2)->paginate(10),
         ]);
     }
 

@@ -10,7 +10,7 @@
     <div class="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-3 gap-4">
         @if ($dormitories->count())
             @foreach($dormitories as $dormitory)
-                <a href="{{$dormitory->map_link}}" target="_blank">
+
                     <div class="bg-white shadow-lg rounded-lg overflow-hidden transition-transform transform hover:scale-105">
                         <img src="{{ asset('storage/' . $dormitory->image) }}" alt="{{ $dormitory->name }}" class="w-full h-40 object-cover">
                         <div class="p-4">
@@ -18,9 +18,12 @@
                             <p class="text-gray-600">{{ $dormitory->location }}</p>
                             <p class="text-gray-600 font-semibold">Price: Php{{ number_format($dormitory->price, 2) }}</p>
                             <p class="text-gray-600">{{ Str::limit($dormitory->details, 100) }}</p>
+                            <span><a href="{{$dormitory->map_link}}" target="_blank" class="text-green-500">View in Map</a></span>
                         </div>
+
+
                     </div>
-                </a>
+
             @endforeach
         @else
             <div class="col-span-full text-center p-4">

@@ -15,7 +15,9 @@
                 <th class="px-4 py-2 border text-left">Name</th>
 
                 <th class="px-4 py-2 border text-left">Phone Number</th>
+
                 <th class="px-4 py-2 border text-left">Email</th>
+
                 <th class="px-4 py-2 border text-center">Actions</th>
             </tr>
         </thead>
@@ -25,7 +27,7 @@
                     <td class="px-4 py-2 border">{{ $owner->name }}</td>
 
                     <td class="px-4 py-2 border">{{ $owner->contact_number }}</td>
-                    <td class="px-4 py-2 border">{{ $owner->is_admin}}</td>
+
                     <td class="px-4 py-2 border">{{ $owner->email }}</td>
                     <td class="px-4 py-2 border text-center">
                         <button class="text-blue-500 hover:underline" wire:click="editOwner({{ $owner->id }})">Edit</button> |
@@ -36,7 +38,7 @@
         </tbody>
     </table>
 
-    <!-- Modal -->
+
     <div x-data="{ showModal: @entangle('modalVisible') }" x-show="showModal" class="fixed inset-0 flex items-center justify-center bg-black bg-opacity-50">
         <div class="bg-white w-full max-w-md p-6 rounded shadow-lg">
             <div class="flex justify-between items-center mb-4">
@@ -53,10 +55,7 @@
                     <label for="name" class="block text-sm font-medium text-gray-700">Name</label>
                     <input type="text" id="name" wire:model.defer="name" class="mt-1 block w-full border-gray-300 rounded-md shadow-sm focus:ring-green-500 focus:border-green-500">
                 </div>
-                <div class="mb-4">
-                    <label for="address" class="block text-sm font-medium text-gray-700">Address</label>
-                    <input type="text" id="address" wire:model.defer="address" class="mt-1 block w-full border-gray-300 rounded-md shadow-sm focus:ring-green-500 focus:border-green-500">
-                </div>
+
                 <div class="mb-4">
                     <label for="contact_number" class="block text-sm font-medium text-gray-700">Phone Number</label>
                     <input type="text" id="contact_number" wire:model.defer="contact_number" class="mt-1 block w-full border-gray-300 rounded-md shadow-sm focus:ring-green-500 focus:border-green-500">

@@ -11,15 +11,18 @@ return new class extends Migration
      */
     public function up(): void
     {
-        Schema::create('dormowners', function (Blueprint $table) {
+        Schema::create('tenants', function (Blueprint $table) {
             $table->id();
-            $table->string('name');
-            $table->string('address');
+            $table->string('owner_id');
+            $table->string('fullname');
+            $table->integer('age');
             $table->string('phone_number');
-            $table->string('is_admin')->default(2);
-            $table->string('email')->unique();
-            $table->string('password');
+            $table->string('room_number');
+            $table->decimal('monthly_fee', 10, 2);
+            $table->date('due_date');
             $table->timestamps();
+
+
         });
     }
 
@@ -28,6 +31,6 @@ return new class extends Migration
      */
     public function down(): void
     {
-        Schema::dropIfExists('dormowners');
+        Schema::dropIfExists('tenants');
     }
 };

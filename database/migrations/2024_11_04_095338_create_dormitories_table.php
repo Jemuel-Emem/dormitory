@@ -20,7 +20,8 @@ return new class extends Migration
             $table->decimal('price', 10, 2);
             $table->text('details')->nullable();
             $table->string('contact_number');
-            $table->string('map_link')->nullable();
+            $table->string('map_link', 2048)->nullable();
+            $table->enum('status', ['active', 'not active'])->default('active');
             $table->timestamps();
         });
     }

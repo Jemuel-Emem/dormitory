@@ -46,6 +46,13 @@ Route::prefix('owner')->middleware(['auth', owner::class])->group(function () {
         return view('owner.add-dorm');
     })->name('owner.add-dorm');
 
+    Route::get('/owner.tenant', function () {
+        return view('owner.tenant');
+    })->name('owner.tenant');
+
+
+
+
 
 });
 
