@@ -14,6 +14,8 @@
                     <th class="px-6 py-3 text-left text-xs font-medium text-gray-500 uppercase">Price</th>
                     <th class="px-6 py-3 text-left text-xs font-medium text-gray-500 uppercase">Details</th>
                     <th class="px-6 py-3 text-left text-xs font-medium text-gray-500 uppercase">Contact Number</th>
+                    <th class="px-6 py-3 text-left text-xs font-medium text-gray-500 uppercase">Slot</th>
+
                     <th class="px-6 py-3 text-left text-xs font-medium text-gray-500 uppercase">Status</th>
                     <th class="px-6 py-3 text-left text-xs font-medium text-gray-500 uppercase">Actions</th>
 
@@ -32,9 +34,10 @@
 
                         <td class="px-6 py-4 text-sm text-gray-900">{{ $dormitory->name }}</td>
                         <td class="px-6 py-4 text-sm text-gray-500">{{ $dormitory->location }}</td>
-                        <td class="px-6 py-4 text-sm text-gray-500">${{ number_format($dormitory->price, 2) }}</td>
+                        <td class="px-6 py-4 text-sm text-gray-500">{{ number_format($dormitory->price, 2) }}</td>
                         <td class="px-6 py-4 text-sm text-gray-500">{{ $dormitory->details }}</td>
                         <td class="px-6 py-4 text-sm text-gray-500">{{ $dormitory->contact_number }}</td>
+                        <td class="px-6 py-4 text-sm text-gray-500">{{ $dormitory->slot }}</td>
                         <td class="px-6 py-4 text-sm text-gray-500">{{ ucfirst($dormitory->status) }}</td>
                         <td class="px-6 py-4">
                             <button wire:click="editDormitory({{ $dormitory->id }})" class="text-blue-600 hover:text-blue-900">Edit</button>
@@ -54,7 +57,7 @@
         <div class="bg-white rounded-lg shadow-lg p-6 w-full max-w-lg mx-auto">
             <h2 class="text-xl font-semibold text-gray-700 mb-4">{{ $isEditMode ? 'Edit Dormitory' : 'Add New Dormitory' }}</h2>
             <form wire:submit.prevent="{{ $isEditMode ? 'updateDormitory' : 'addDormitory' }}">
-                <div class="grid grid-cols-2 gap-4">
+                <div class="grid grid-cols-3 gap-4">
                     <!-- Dormitory Name -->
                     <div>
                         <label class="block text-gray-600 text-sm font-bold mb-1">Dormitory Name</label>
@@ -77,28 +80,35 @@
                     </div>
 
                     <!-- Details -->
-                    <div>
+                    <div class="col-span-3">
                         <label class="block text-gray-600 text-sm font-bold mb-1">Details</label>
                         <textarea wire:model="details" class="w-full p-2 border border-gray-300 rounded" placeholder="Enter details" rows="3"></textarea>
                         @error('details') <span class="text-red-500 text-xs">{{ $message }}</span> @enderror
                     </div>
 
-
+                    <!-- Contact Number -->
                     <div>
                         <label class="block text-gray-600 text-sm font-bold mb-1">Contact Number</label>
                         <input type="text" wire:model="contact_number" class="w-full p-2 border border-gray-300 rounded" placeholder="Enter contact number" />
                         @error('contact_number') <span class="text-red-500 text-xs">{{ $message }}</span> @enderror
                     </div>
 
-
+                    <!-- Map Link -->
                     <div>
                         <label class="block text-gray-600 text-sm font-bold mb-1">Map Link</label>
                         <input type="text" wire:model="map_link" class="w-full p-2 border border-gray-300 rounded" placeholder="Enter map link (optional)" />
                         @error('map_link') <span class="text-red-500 text-xs">{{ $message }}</span> @enderror
                     </div>
 
+                    <!-- Slot -->
+                    <div>
+                        <label class="block text-gray-600 text-sm font-bold mb-1">Slot</label>
+                        <input type="number" wire:model="slot" class="w-full p-2 border border-gray-300 rounded" placeholder="Enter slot" />
+                        @error('slot') <span class="text-red-500 text-xs">{{ $message }}</span> @enderror
+                    </div>
 
-                    <div class="col-span-2">
+                    <!-- Image -->
+                    <div>
                         <label class="block text-gray-600 text-sm font-bold mb-1">Image</label>
                         <input type="file" wire:model="newImage" class="w-full p-2 border border-gray-300 rounded" />
                         @if ($image && !$newImage)
@@ -109,17 +119,15 @@
                         @error('newImage') <span class="text-red-500 text-xs">{{ $message }}</span> @enderror
                     </div>
 
-
-<div class="">
-    <label class="block text-gray-600 text-sm font-bold mb-1">Status</label>
-    <select wire:model="status" class="w-full p-2 border border-gray-300 rounded">
-        <option value="active">Active</option>
-        <option value="not active">Not Active</option>
-    </select>
-    @error('status') <span class="text-red-500 text-xs">{{ $message }}</span> @enderror
-</div>
-
-
+                    <!-- Status -->
+                    <div>
+                        <label class="block text-gray-600 text-sm font-bold mb-1">Status</label>
+                        <select wire:model="status" class="w-full p-2 border border-gray-300 rounded">
+                            <option value="active">Active</option>
+                            <option value="not active">Not Active</option>
+                        </select>
+                        @error('status') <span class="text-red-500 text-xs">{{ $message }}</span> @enderror
+                    </div>
                 </div>
 
                 <div class="flex justify-end mt-6">
@@ -136,6 +144,7 @@
                     </button>
                 </div>
             </form>
+
         </div>
     </div>
 @endif

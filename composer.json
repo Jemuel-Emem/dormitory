@@ -10,6 +10,7 @@
         "laravel/tinker": "^2.9",
         "livewire/livewire": "^3.4",
         "livewire/volt": "^1.0",
+        "php-flasher/flasher-laravel": "^2.1",
         "wireui/wireui": "*"
     },
     "require-dev": {

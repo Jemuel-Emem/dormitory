@@ -3,6 +3,7 @@
 namespace App\Livewire\User;
 
 use App\Models\Dormitory as Dorm;
+use App\Models\Reserve_Slot;
 use Livewire\Component;
 use Livewire\WithPagination;
 
@@ -21,6 +22,23 @@ class Dormitory extends Component
             'dormitories' => $dormitories,
         ]);
     }
+    public function reserve($dormId)
+    {
+
+        if (Reserve_Slot::where('user_id', auth()->id())->where('dorm_id', $dormId)->exists()) {
+            flash()->addError('You have already reserved a slot for this dormitory!');
+            return;
+        }
+
+
+        Reserve_Slot::create([
+            'user_id' => auth()->id(),
+            'dorm_id' => $dormId,
+        ]);
+
+        flash()->addSuccess('Slot reserved successfully!');
+    }
+
 
     public function search()
     {

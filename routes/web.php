@@ -84,6 +84,10 @@ Route::prefix('user')->middleware(['auth', user::class])->group(function () {
         return view('user.dormitory');
     })->name('user.dormitory');
 
+    Route::get('/user.status', function () {
+        return view('user.status');
+    })->name('user.status');
+
 
 
 

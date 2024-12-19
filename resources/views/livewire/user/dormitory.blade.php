@@ -11,18 +11,24 @@
         @if ($dormitories->count())
             @foreach($dormitories as $dormitory)
 
-                    <div class="bg-white shadow-lg rounded-lg overflow-hidden transition-transform transform hover:scale-105">
-                        <img src="{{ asset('storage/' . $dormitory->image) }}" alt="{{ $dormitory->name }}" class="w-full h-40 object-cover">
-                        <div class="p-4">
-                            <h3 class="font-bold text-lg text-gray-800 hover:text-green-500 transition-colors">{{ $dormitory->name }}</h3>
-                            <p class="text-gray-600">{{ $dormitory->location }}</p>
-                            <p class="text-gray-600 font-semibold">Price: Php{{ number_format($dormitory->price, 2) }}</p>
-                            <p class="text-gray-600">{{ Str::limit($dormitory->details, 100) }}</p>
-                            <span><a href="{{$dormitory->map_link}}" target="_blank" class="text-green-500">View in Map</a></span>
-                        </div>
+            <div class="bg-white shadow-lg rounded-lg overflow-hidden transition-transform transform hover:scale-105">
+                <img src="{{ asset('storage/' . $dormitory->image) }}" alt="{{ $dormitory->name }}" class="w-full h-40 object-cover">
+                <div class="p-4">
+                    <h3 class="font-bold text-lg text-gray-800 hover:text-green-500 transition-colors">{{ $dormitory->name }}</h3>
+                    <p class="text-gray-600">{{ $dormitory->location }}</p>
+                    <p class="text-gray-600 font-semibold">Price: Php{{ number_format($dormitory->price, 2) }}</p>
+                    <p class="text-gray-600">{{ Str::limit($dormitory->details, 100) }}</p>
+                    <span><a href="{{ $dormitory->map_link }}" target="_blank" class="text-green-500">View in Map</a></span>
 
 
+                    <div class="mt-4">
+                        <button wire:click="reserve({{ $dormitory->id }})" class="w-full bg-blue-500 hover:bg-blue-600 text-white font-semibold px-4 py-2 rounded">
+                            Reserve Slot
+                        </button>
                     </div>
+                </div>
+            </div>
+
 
             @endforeach
         @else

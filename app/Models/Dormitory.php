@@ -15,6 +15,9 @@ class Dormitory extends Model
         'details',
         'contact_number',
         'map_link',
-        'status'
+        'status',
+        'slot'
     ];
+
+
 }

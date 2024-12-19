@@ -27,7 +27,7 @@ class AddDorm extends Component
     public $newImage = null;
     public $showModal = false;
     public $status = 'active';
-
+    public $slot;
     public function mount()
     {
         // Initialize any necessary properties if required
@@ -43,6 +43,7 @@ class AddDorm extends Component
         'map_link' => 'nullable|url',
         'newImage' => 'nullable|image|max:2048',
         'status' => 'required|in:active,not active',
+        'slot' => 'required|integer|min:0',
     ];
 
     public function addDormitory()
@@ -61,6 +62,7 @@ class AddDorm extends Component
             'map_link' => $this->map_link,
             'image' => $imagePath,
             'status' => $this->status,
+            'slot' => $this->slot,
         ]);
 
         $this->resetForm();
@@ -81,6 +83,8 @@ class AddDorm extends Component
         $this->isEditMode = true;
         $this->showModal = true; // Open modal for editing
         $this->status = $dormitory->status;
+        $this->slot = $dormitory->slot;
+
     }
 
     public function updateDormitory()
@@ -108,6 +112,7 @@ class AddDorm extends Component
             'map_link' => $this->map_link,
             'image' => $imagePath,
             'status' => $this->status,
+            'slot' => $this->slot,
         ]);
 
         $this->resetForm();
@@ -136,7 +141,7 @@ class AddDorm extends Component
 
     private function resetForm()
     {
-        $this->reset(['name', 'location', 'price', 'details', 'contact_number', 'map_link', 'newImage', 'showModal', 'isEditMode', 'selectedDormitoryId']);
+        $this->reset(['name','slot', 'location', 'price', 'details', 'contact_number', 'map_link', 'newImage', 'showModal', 'isEditMode', 'selectedDormitoryId']);
     }
 
     public function render()

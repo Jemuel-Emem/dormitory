@@ -25,6 +25,8 @@ class AddDorm extends Component
     public $contact_number;
     public $map_link;
     public $image;
+
+
     public $newImage = null;
     public $showModal = false;
 
@@ -42,6 +44,7 @@ class AddDorm extends Component
         'contact_number' => 'required|string|max:15',
         'map_link' => 'nullable|url',
         'newImage' => 'nullable|image|max:2048', // 2MB Max
+
     ];
 
     public function addDormitory()
@@ -59,6 +62,7 @@ class AddDorm extends Component
             'contact_number' => $this->contact_number,
             'map_link' => $this->map_link,
             'image' => $imagePath,
+            'slot' => $this->slot,
         ]);
 
         $this->resetForm();
@@ -78,6 +82,8 @@ class AddDorm extends Component
         $this->image = $dormitory->image; // Current image
         $this->isEditMode = true;
         $this->showModal = true; // Open modal for editing
+        $this->slot = $dormitory->slot;
+
     }
 
     public function updateDormitory()
@@ -104,6 +110,7 @@ class AddDorm extends Component
             'contact_number' => $this->contact_number,
             'map_link' => $this->map_link,
             'image' => $imagePath,
+            'slot' => $this->slot,
         ]);
 
         $this->resetForm();
