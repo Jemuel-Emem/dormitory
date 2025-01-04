@@ -54,6 +54,10 @@ Route::prefix('owner')->middleware(['auth', owner::class])->group(function () {
         return view('owner.payment');
     })->name('owner.payment');
 
+    Route::get('/owner.tenantlist', function () {
+        return view('owner.tenantlist');
+    })->name('owner.tenantlist');
+
 
 
 

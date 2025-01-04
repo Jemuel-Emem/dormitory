@@ -118,6 +118,13 @@
                 </li>
 
                 <li>
+                    <a href="{{route('owner.tenantlist')}}" class="flex items-center p-2 rounded-lg hover:bg-gray-700 ">
+                        <i class="ri-user-add-fill text-red-500"></i>
+
+                        <span class="ms-3 text-gray-500">Tenant Reservation</span>
+                    </a>
+                </li>
+                <li>
                     <a href="{{route('owner.tenant')}}" class="flex items-center p-2 rounded-lg hover:bg-gray-700 ">
                         <i class="ri-user-add-fill text-red-500"></i>
 

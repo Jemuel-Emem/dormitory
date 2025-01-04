@@ -25,6 +25,10 @@ class User extends Authenticatable
         'contact_number',
         'photo'
     ];
+    public function reserveSlots()
+    {
+        return $this->hasMany(Reserve_Slot::class);
+    }
 
     /**
      * The attributes that should be hidden for serialization.

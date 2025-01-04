@@ -18,6 +18,10 @@ class Dormitory extends Model
         'status',
         'slot'
     ];
+    public function reserveSlots()
+    {
+        return $this->hasMany(Reserve_Slot::class, 'dorm_id');
+    }
 
 
 }
