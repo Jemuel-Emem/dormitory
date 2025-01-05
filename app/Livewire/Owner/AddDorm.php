@@ -54,6 +54,7 @@ class AddDorm extends Component
 
         Dormitory::create([
             'user_id' => Auth::id(),
+            'owner_id' => Auth::id(),
             'name' => $this->name,
             'location' => $this->location,
             'price' => $this->price,

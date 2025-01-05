@@ -10,7 +10,7 @@
             <thead class="bg-gray-50">
                 <tr>
                     <th class="px-6 py-3 text-left text-xs font-medium text-gray-500 uppercase">Fullname</th>
-                    <th class="px-6 py-3 text-left text-xs font-medium text-gray-500 uppercase">Room Number</th>
+                    <th class="px-6 py-3 text-left text-xs font-medium text-gray-500 uppercase">Room Name</th>
                     <th class="px-6 py-3 text-left text-xs font-medium text-gray-500 uppercase">Monthly Fee</th>
                     <th class="px-6 py-3 text-left text-xs font-medium text-gray-500 uppercase">Due Date</th>
                 </tr>
@@ -21,7 +21,7 @@
                         <td class="px-6 py-4 text-sm text-gray-900">{{ $tenant->fullname }}</td>
                         <td class="px-6 py-4 text-sm text-gray-500">{{ $tenant->room_number }}</td>
                         <td class="px-6 py-4 text-sm text-gray-500">Php {{ number_format($tenant->monthly_fee, 2) }}</td>
-                        <td class="px-6 py-4 text-sm text-gray-500">{{ \Carbon\Carbon::parse($tenant->due_date)->format('jS') }}</td>
+                        <td class="px-6 py-4 text-sm text-gray-500">{{ \Carbon\Carbon::parse($tenant->due_date)->format('jS') }} of the month</td>
 
                     </tr>
                 @empty

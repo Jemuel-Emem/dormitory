@@ -23,7 +23,8 @@ class User extends Authenticatable
         'email',
         'password',
         'contact_number',
-        'photo'
+        'photo',
+        'age'
     ];
     public function reserveSlots()
     {

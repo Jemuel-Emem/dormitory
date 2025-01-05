@@ -13,7 +13,7 @@ use Livewire\WithFileUploads; // Import the WithFileUploads trait
 new #[Layout('layouts.guest')] class extends Component
 {
     use WithFileUploads; // Include the trait for file uploads
-
+    public string $age = '';
     public string $name = '';
     public string $email = '';
     public string $password = '';
@@ -28,6 +28,7 @@ new #[Layout('layouts.guest')] class extends Component
     {
         // Validate input data, including the new fields
         $validated = $this->validate([
+            'age' => ['required', 'string', 'max:255'],
             'name' => ['required', 'string', 'max:255'],
             'email' => ['required', 'string', 'lowercase', 'email', 'max:255', 'unique:' . User::class],
             'password' => ['required', 'string', 'confirmed', Rules\Password::defaults()],
@@ -74,7 +75,20 @@ new #[Layout('layouts.guest')] class extends Component
                 />
                 <x-input-error :messages="$errors->get('name')" class="mt-2 text-red-600" />
             </div>
-
+            <div>
+                <x-input-label for="age" :value="__('Age')" class="font-semibold text-gray-700" />
+                <x-text-input
+                    wire:model="age"
+                    id="age"
+                    type="age"
+                    name="age"
+                    required
+                    autofocus
+                    autocomplete="age"
+                    class="block mt-1 w-full px-4 py-3 border rounded-lg focus:ring-teal-500 focus:border-teal-500"
+                />
+                <x-input-error :messages="$errors->get('name')" class="mt-2 text-red-600" />
+            </div>
             <!-- Contact Number -->
             <div>
                 <x-input-label for="contact_number" :value="__('Contact Number')" class="font-semibold text-gray-700" />

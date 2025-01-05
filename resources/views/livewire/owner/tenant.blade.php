@@ -42,17 +42,21 @@
     @if($showModal)
     <div class="fixed inset-0 flex items-center justify-center bg-gray-800 bg-opacity-50 z-50">
         <div class="bg-white rounded-lg shadow-lg p-6 w-full max-w-lg mx-auto">
+
             <h2 class="text-xl font-semibold text-gray-700 mb-4">{{ $isEditMode ? 'Edit Tenant' : 'Add New Tenant' }}</h2>
             <form wire:submit.prevent="{{ $isEditMode ? 'updateTenant' : 'addTenant' }}">
                 <div class="grid grid-cols-2 gap-4">
-                    <!-- Fullname -->
+
                     <div>
                         <label class="block text-gray-600 text-sm font-bold mb-1">Fullname</label>
                         <input type="text" wire:model="fullname" class="w-full p-2 border border-gray-300 rounded" placeholder="Enter fullname" />
+                        @if($errorMessage)
+                        <span class="text-red-500 text-xs">{{ $errorMessage }}</span>
+                    @endif
                         @error('fullname') <span class="text-red-500 text-xs">{{ $message }}</span> @enderror
                     </div>
 
-                    <!-- Age -->
+
                     <div>
                         <label class="block text-gray-600 text-sm font-bold mb-1">Age</label>
                         <input type="number" wire:model="age" class="w-full p-2 border border-gray-300 rounded" placeholder="Enter age" />
@@ -92,6 +96,12 @@
                     <button
                         type="button"
                         class="bg-gray-500 hover:bg-gray-600 text-white font-semibold px-4 py-2 rounded mr-2"
+                        wire:click="load">
+                        Search Tenant
+                    </button>
+                    <button
+                        type="button"
+                        class="bg-red-500 hover:bg-gray-600 text-white font-semibold px-4 py-2 rounded mr-2"
                         wire:click="$set('showModal', false)">
                         Cancel
                     </button>
