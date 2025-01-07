@@ -28,5 +28,18 @@ class Dormitory extends Model
         return $this->belongsTo(User::class, 'owner_id');
     }
 
+    public function dormitory()
+    {
+        return $this->belongsTo(Dormitory::class);
+    }
 
+    public function user()
+    {
+        return $this->belongsTo(User::class);
+    }
+
+    public function comments()
+    {
+        return $this->hasMany(Comment::class);
+    }
 }

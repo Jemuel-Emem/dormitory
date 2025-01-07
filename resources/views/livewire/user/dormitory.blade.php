@@ -19,7 +19,9 @@
                     <p class="text-gray-600 font-semibold">Price: Php{{ number_format($dormitory->price, 2) }}</p>
                     <p class="text-gray-600">{{ Str::limit($dormitory->details, 100) }}</p>
                     <span><a href="{{ $dormitory->map_link }}" target="_blank" class="text-green-500">View in Map</a></span>
-
+                    <button wire:click="showComments({{ $dormitory->id }})" class="text-blue-400 mt-2">
+                        Comments
+                    </button>
 
                     <div class="mt-4">
                         <button wire:click="reserve({{ $dormitory->id }})" class="w-full bg-blue-500 hover:bg-blue-600 text-white font-semibold px-4 py-2 rounded">
@@ -41,4 +43,39 @@
     <div class="mt-4">
         {{ $dormitories->links() }}
     </div>
+
+    @if ($showModal)
+    <div class="fixed inset-0 bg-black bg-opacity-50 flex items-center justify-center z-50">
+        <div class="bg-white rounded-lg p-6 w-11/12 md:w-1/2 lg:w-1/3">
+            <h2 class="text-lg font-semibold mb-4">Comments for {{ $selectedDormitoryName }}</h2>
+            <div class="overflow-y-auto max-h-60">
+                @if ($comments && count($comments) > 0)
+                    @foreach ($comments as $comment)
+                        <div class="border-b border-gray-300 pb-2 mb-2">
+                            <p class="text-gray-800 font-semibold">{{ $comment->user->name ?? 'Anonymous' }}</p>
+                            <p class="text-gray-600">{{ $comment->content }}</p>
+                        </div>
+                    @endforeach
+                @else
+                    <p class="text-gray-600">No comments available.</p>
+                @endif
+            </div>
+
+            <!-- Add Comment Form -->
+            <form wire:submit.prevent="addComment" class="mt-4">
+                <textarea wire:model.defer="newComment" placeholder="Write a comment..." class="w-full p-2 border border-gray-300 rounded focus:outline-none focus:ring-2 focus:ring-green-500"></textarea>
+                @error('newComment') <p class="text-red-500 text-sm">{{ $message }}</p> @enderror
+                <button type="submit" class="bg-green-500 hover:bg-green-600 text-white font-semibold px-4 py-2 rounded mt-2">
+                    Add Comment
+                </button>
+            </form>
+
+            <div class="mt-4">
+                <button wire:click="closeModal" class="bg-gray-500 hover:bg-gray-600 text-white font-semibold px-4 py-2 rounded mr-2">
+                    Close
+                </button>
+            </div>
+        </div>
+    </div>
+    @endif
 </div>

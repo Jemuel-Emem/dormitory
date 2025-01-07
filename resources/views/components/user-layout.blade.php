@@ -38,7 +38,7 @@
                 <a class="hover:text-green-600 focus:outline-none transition-colors" href="{{route('dashboard')}}">Home</a>
                 <a class="hover:text-green-600 focus:outline-none transition-colors" href="{{route('user.dormitory')}}">Dormitories</a>
                 <a class="hover:text-green-600 focus:outline-none transition-colors" href="{{route('user.status')}}">Status</a>
-                <a class="hover:text-green-600 focus:outline-none transition-colors" href="#">My Favorites</a>
+                {{-- <a class="hover:text-green-600 focus:outline-none transition-colors" href="#">My Favorites</a> --}}
 
 
                 <form method="POST" action="{{route('logout')}}" class="ml-auto">

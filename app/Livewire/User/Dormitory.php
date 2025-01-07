@@ -1,7 +1,7 @@
 <?php
 
 namespace App\Livewire\User;
-
+use App\Models\comment;
 use App\Models\Dormitory as Dorm;
 use App\Models\Reserve_Slot;
 use Livewire\Component;
@@ -10,7 +10,11 @@ use Livewire\WithPagination;
 class Dormitory extends Component
 {
     use WithPagination;
-
+    public $showModal = false;
+    public $comments = [];
+    public $newComment = '';
+public $selectedDormitoryId;
+    public $selectedDormitoryName;
     public $searchLocation = '';
     public $searchPrice = '';
 
@@ -22,6 +26,43 @@ class Dormitory extends Component
             'dormitories' => $dormitories,
         ]);
     }
+
+    public function showComments($dormitoryId)
+    {
+        $dormitory = dorm::with('comments.user')->findOrFail($dormitoryId);
+        $this->comments = $dormitory->comments;
+        $this->selectedDormitoryName = $dormitory->name;
+        $this->selectedDormitoryId = $dormitory->id;
+        $this->showModal = true;
+    }
+
+
+    public function addComment()
+    {
+        $this->validate([
+            'newComment' => 'required|string|max:255',
+        ]);
+
+        Comment::create([
+            'user_id' => auth()->id(),
+            'dormitory_id' => $this->selectedDormitoryId,
+            'content' => $this->newComment,
+        ]);
+
+
+        $this->showComments($this->selectedDormitoryId);
+
+
+        $this->newComment = '';
+    }
+
+
+    public function closeModal()
+    {
+        $this->showModal = false;
+        $this->reset(['newComment', 'selectedDormitoryId']);
+    }
+
     public function reserve($dormId)
     {
 
