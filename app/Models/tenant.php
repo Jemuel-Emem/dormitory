@@ -17,4 +17,16 @@ class tenant extends Model
         'monthly_fee',
         'due_date',
     ];
+
+    // In Tenant model
+public function monthlyPayment()
+{
+    return $this->hasOne(monthly_payment::class);
+}
+public function dormitory()
+{
+    return $this->belongsTo(Dormitory::class);
+}
+
+
 }

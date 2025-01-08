@@ -1,18 +1,53 @@
 <?php
 
 namespace App\Livewire\Owner;
-
+use App\Models\monthly_payment as MonthlyPayment;
 use Livewire\Component;
 use Illuminate\Support\Facades\Auth;
-use App\Models\Tenant; // Assuming your model name is Tenant
+use App\Models\Tenant;
 
 class Payment extends Component
 {
     public $tenants;
+    public function markAsPaid($tenantId)
+    {
+        $ownerId = auth()->id();
 
+
+        $payment = MonthlyPayment::firstOrCreate(
+            [
+                'owner_id' => $ownerId,
+                'tenant_id' => $tenantId,
+            ]
+
+        );
+
+
+        $payment->update(['status' => 'paid']);
+        flash()->success('Payment marked as Paid.');
+
+    }
+
+    public function markAsOverdue($tenantId)
+    {
+        $ownerId = auth()->id();
+
+
+        $payment = MonthlyPayment::firstOrCreate(
+            [
+                'owner_id' => $ownerId,
+                'tenant_id' => $tenantId,
+            ]
+
+        );
+
+
+        $payment->update(['status' => 'overdue']);
+        flash()->success('Payment marked as Overdue.');
+    }
     public function mount()
     {
-        // Fetch tenants for the logged-in owner
+
         $this->tenants = Tenant::where('owner_id', Auth::id())->get();
     }
 

@@ -17,4 +17,64 @@
             <h3 class="mt-2 text-lg font-medium">Reservations</h3>
         </div>
     </div>
+
+    <div class="bg-yellow-100 text-yellow-600 shadow-sm rounded-lg p-6 flex flex-col items-center">
+        <canvas id="monthlyIncomeChart" width="400" height="200"></canvas>
+        <h3 class="mt-2 text-lg font-medium">Monthly Income</h3>
+    </div>
+
+    <script>
+        document.addEventListener("DOMContentLoaded", function () {
+            const monthlyIncome = @json($monthlyIncome);
+
+
+            const incomeData = {
+                labels: ['Current Month'],
+                datasets: [{
+                    label: 'Monthly Income',
+                    data: [monthlyIncome],
+                    backgroundColor: 'rgba(255, 159, 64, 0.2)',
+                    borderColor: 'rgba(255, 159, 64, 1)',
+                    borderWidth: 1
+                }]
+            };
+
+
+            const config = {
+                type: 'bar',
+                data: incomeData,
+                options: {
+                    responsive: true,
+                    scales: {
+                        y: {
+                            beginAtZero: true,
+                            ticks: {
+                                callback: function(value) {
+                                    return 'Php ' + value.toFixed(2);
+                                }
+                            }
+                        }
+                    },
+                    plugins: {
+                        legend: {
+                            position: 'top',
+                        },
+                        tooltip: {
+                            callbacks: {
+                                label: function(tooltipItem) {
+
+                                    return 'Php ' + tooltipItem.raw.toFixed(2);
+                                }
+                            }
+                        }
+                    }
+                }
+            };
+
+
+            new Chart(document.getElementById('monthlyIncomeChart'), config);
+        });
+    </script>
+
+
 </div>

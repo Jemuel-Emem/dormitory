@@ -12,6 +12,7 @@
     <script type="text/javascript" src="instascan.min.js"></script>
        <script src="https://cdn.jsdelivr.net/npm/instascan@1.0.0/build/instascan.min.js"></script>
 
+       <script src="https://cdn.jsdelivr.net/npm/chart.js"></script>
 
     @vite(['resources/css/app.css', 'resources/js/app.js'])
     @wireUiScripts

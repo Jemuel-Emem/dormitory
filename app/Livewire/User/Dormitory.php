@@ -83,8 +83,7 @@ public $selectedDormitoryId;
 
     public function search()
     {
-        // This function can be empty, as the filtering is already applied in the render method
-        // Alternatively, you could put any additional logic needed for searching here.
+
     }
 
     private function getFilteredDormitories()
