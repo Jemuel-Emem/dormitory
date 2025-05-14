@@ -59,8 +59,9 @@ Route::prefix('owner')->middleware(['auth', owner::class])->group(function () {
     })->name('owner.tenantlist');
 
 
-
-
+    Route::get('/owner.aminities', function () {
+        return view('owner.aminities');
+    })->name('owner.aminities');
 
 });
 
@@ -74,6 +75,9 @@ Route::prefix('admin')->middleware(['auth', admin::class])->group(function () {
         return view('admin.add-dorm-owner');
     })->name('admin.add-dorm-owner');
 
+    Route::get('/admin.user', function () {
+        return view('admin.user');
+    })->name('admin.user');
 
 });
 

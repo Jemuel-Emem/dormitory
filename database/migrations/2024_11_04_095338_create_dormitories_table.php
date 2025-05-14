@@ -23,7 +23,7 @@ return new class extends Migration
             $table->string('contact_number');
             $table->string('map_link', 2048)->nullable();
             $table->enum('status', ['active', 'not active'])->default('active');
-
+  $table->json('amenities_ids')->nullable();
             $table->timestamps();
         });
     }

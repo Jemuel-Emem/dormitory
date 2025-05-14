@@ -27,6 +27,10 @@ public function dormitory()
 {
     return $this->belongsTo(Dormitory::class);
 }
+public function amenities()
+{
+    return $this->belongsToMany(Amenities::class);
+}
 
 
 }

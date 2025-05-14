@@ -21,6 +21,7 @@ return new class extends Migration
             $table->string('contact_number')->nullable();
             $table->string('age')->nullable();
             $table->string('photo')->nullable();
+             $table->string('status')->default('pending');
             $table->rememberToken();
             $table->timestamps();
         });

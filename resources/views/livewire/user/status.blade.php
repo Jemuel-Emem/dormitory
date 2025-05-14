@@ -1,6 +1,5 @@
 <div class="container mx-auto py-6">
 
-
     @if($reservations->isEmpty())
         <p class="text-center text-gray-500">You have no reservations.</p>
     @else
@@ -13,11 +12,12 @@
 
                         <p class="text-gray-600 mb-2"><strong>Status:</strong> {{ ucfirst($reservation->status) }}</p>
 
+                        <p class="text-gray-600 mb-2"><strong>Slots Reserved:</strong> {{ $reservation->slot }}</p>
+
                         <p class="text-gray-500 mb-4"><strong>Reserved At:</strong> {{ $reservation->created_at->format('F j, Y, g:i a') }}</p>
 
                         <p class="text-gray-500 text-sm"><strong>Updated At:</strong> {{ $reservation->updated_at->format('F j, Y, g:i a') }}</p>
                     </div>
-
 
                 </div>
             @endforeach

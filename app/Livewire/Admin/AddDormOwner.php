@@ -32,6 +32,21 @@ class AddDormOwner extends Component
         $this->isEdit = $isEdit;
         $this->modalVisible = true;
     }
+    public function approveOwner($id)
+{
+    $owner = DormOwner::findOrFail($id);
+    $owner->status = 'approved';
+    $owner->save();
+    session()->flash('message', 'Owner approved successfully.');
+}
+
+public function declineOwner($id)
+{
+    $owner = DormOwner::findOrFail($id);
+    $owner->status = 'declined';
+    $owner->save();
+    session()->flash('message', 'Owner declined.');
+}
 
     public function closeModal()
     {

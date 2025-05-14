@@ -6,6 +6,11 @@ use Illuminate\Database\Eloquent\Model;
 
 class Dormitory extends Model
 {
+    protected $casts = [
+    'amenities_ids' => 'array',
+];
+
+
     protected $fillable = [
         'user_id',
         'image',
@@ -17,8 +22,21 @@ class Dormitory extends Model
         'map_link',
         'status',
         'owner_id',
-        'slot'
+        'slot',
+        'amenities_ids'
     ];
+
+    public function amenities()
+{
+    return $this->belongsToMany(Amenities::class, 'dormitory_amenity', 'dormitory_id', 'amenity_id');
+}
+
+// public function amenities()
+// {
+//     return $this->belongsToMany(Amenities::class);
+// }
+
+
     public function reserveSlots()
     {
         return $this->hasMany(Reserve_Slot::class, 'dorm_id');

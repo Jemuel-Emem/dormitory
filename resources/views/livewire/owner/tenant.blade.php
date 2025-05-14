@@ -44,10 +44,22 @@
         <div class="bg-white rounded-lg shadow-lg p-6 w-full max-w-lg mx-auto">
 
             <h2 class="text-xl font-semibold text-gray-700 mb-4">{{ $isEditMode ? 'Edit Tenant' : 'Add New Tenant' }}</h2>
+                   @if(!empty($reservedAmenities))
+    <div class="col-span-2">
+        <label class="block text-gray-600 text-sm font-bold mb-1">Reserved Amenities</label>
+        <ul class="list-disc pl-5 text-sm text-gray-700">
+            @foreach($reservedAmenities as $amenity)
+                <li>{{ $amenity->name }} - Php{{ number_format($amenity->price, 2) }}</li>
+            @endforeach
+        </ul>
+    </div>
+@endif
             <form wire:submit.prevent="{{ $isEditMode ? 'updateTenant' : 'addTenant' }}">
                 <div class="grid grid-cols-2 gap-4">
 
                     <div>
+
+
                         <label class="block text-gray-600 text-sm font-bold mb-1">Fullname</label>
                         <input type="text" wire:model="fullname" class="w-full p-2 border border-gray-300 rounded" placeholder="Enter fullname" />
                         @if($errorMessage)

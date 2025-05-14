@@ -5,6 +5,7 @@ namespace App\Livewire\Admin;
 use App\Models\Dormitory;
 use Livewire\Component;
 use Illuminate\Support\Facades\Storage;
+use App\Models\User as owner;
 use Livewire\WithPagination;
 use Livewire\WithFileUploads;
 use Illuminate\Support\Facades\Auth;
@@ -62,7 +63,7 @@ class AddDorm extends Component
             'contact_number' => $this->contact_number,
             'map_link' => $this->map_link,
             'image' => $imagePath,
-            'slot' => $this->slot,
+
         ]);
 
         $this->resetForm();
@@ -82,7 +83,6 @@ class AddDorm extends Component
         $this->image = $dormitory->image; // Current image
         $this->isEditMode = true;
         $this->showModal = true; // Open modal for editing
-        $this->slot = $dormitory->slot;
 
     }
 
@@ -116,6 +116,22 @@ class AddDorm extends Component
         $this->resetForm();
         $this->showModal = false; // Close modal after updating
     }
+
+    public function approveOwner($id)
+{
+    $owner = owner::findOrFail($id);
+    $owner->status = 'approved';
+    $owner->save();
+    session()->flash('message', 'Owner approved successfully.');
+}
+
+public function declineOwner($id)
+{
+    $owner = owner::findOrFail($id);
+    $owner->status = 'declined';
+    $owner->save();
+    session()->flash('message', 'Owner declined.');
+}
 
     public function deleteDormitory()
     {

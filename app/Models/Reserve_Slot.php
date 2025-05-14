@@ -13,6 +13,8 @@ class Reserve_Slot extends Model
     protected $fillable = [
         'user_id',
         'dorm_id',
+        'slot',
+        'amenities_ids'
     ];
     public function user()
     {

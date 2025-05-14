@@ -12,6 +12,8 @@ use Livewire\WithFileUploads; // Import the WithFileUploads trait
 
 new #[Layout('layouts.guest')] class extends Component
 {
+    public string $role = 'tenant'; // default to tenant
+
     use WithFileUploads; // Include the trait for file uploads
     public string $age = '';
     public string $name = '';
@@ -28,6 +30,7 @@ new #[Layout('layouts.guest')] class extends Component
     {
         // Validate input data, including the new fields
         $validated = $this->validate([
+              'role' => ['required', 'in:tenant,owner'],
             'age' => ['required', 'string', 'max:255'],
             'name' => ['required', 'string', 'max:255'],
             'email' => ['required', 'string', 'lowercase', 'email', 'max:255', 'unique:' . User::class],
@@ -35,6 +38,8 @@ new #[Layout('layouts.guest')] class extends Component
             'contact_number' => ['required', 'string', 'max:15'], // Validate contact number
             'photo' => ['nullable', 'image', 'mimes:jpeg,png,jpg,gif', 'max:2048'], // Validate photo upload
         ]);
+
+$validated['is_admin'] = $this->role === 'owner' ? 2 : 0;
 
         // Hash the password
         $validated['password'] = Hash::make($validated['password']);
@@ -160,6 +165,22 @@ new #[Layout('layouts.guest')] class extends Component
                 />
                 <x-input-error :messages="$errors->get('password_confirmation')" class="mt-2 text-red-600" />
             </div>
+
+            <div>
+    <x-input-label for="role" :value="__('Register As')" class="font-semibold text-gray-700" />
+    <select
+        wire:model="role"
+        id="role"
+        name="role"
+        required
+        class="block mt-1 w-full px-4 py-3 border rounded-lg focus:ring-teal-500 focus:border-teal-500"
+    >
+        <option value="tenant">Tenant</option>
+        <option value="owner">Owner</option>
+    </select>
+    <x-input-error :messages="$errors->get('role')" class="mt-2 text-red-600" />
+</div>
+
         </div>
 
         <!-- Submit and Link -->

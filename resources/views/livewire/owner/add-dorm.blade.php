@@ -107,6 +107,20 @@
                         @error('slot') <span class="text-red-500 text-xs">{{ $message }}</span> @enderror
                     </div>
 
+                  <div class="col-span-3">
+    <label class="block text-gray-600 text-sm font-bold mb-1">Amenities</label>
+    <div class="grid grid-cols-2 gap-2">
+    @foreach($amenities as $amenity)
+    <label class="flex items-center space-x-2">
+        <input type="checkbox" wire:model="selectedAmenities" value="{{ $amenity->id }}">
+        <span>{{ $amenity->name }}</span>
+    </label>
+@endforeach
+
+    </div>
+    @error('selectedAmenities') <span class="text-red-500 text-xs">{{ $message }}</span> @enderror
+</div>
+
                     <!-- Image -->
                     <div>
                         <label class="block text-gray-600 text-sm font-bold mb-1">Image</label>

@@ -12,12 +12,15 @@ use Livewire\Component;
 class Tenant extends Component
 {
     use WithPagination, WithFileUploads;
+public $selectedAmenities = [];
+public $amenities = [];
+
 
     public $showModal = false, $showDeleteModal = false;
     public $isEditMode = false;
     public $errorMessage = '';
     public $tenantId, $fullname, $age, $phone_number, $room_number, $monthly_fee, $due_date;
-
+public $reservedAmenities = [];
     protected $rules = [
         'fullname'     => 'required|string|max:255',
         'age'          => 'required|numeric|min:1',
@@ -27,6 +30,49 @@ class Tenant extends Component
         'due_date'     => 'required|date',
     ];
 
+
+public function mount()
+{
+    $this->amenities = \App\Models\Amenities::all();
+}
+
+// public function updatedSelectedAmenities()
+// {
+//     $reservation = Reserve_Slot::where('status', 'approved')
+//         ->whereHas('user', function ($query) {
+//             $query->where('name', $this->fullname);
+//         })
+//         ->whereHas('dorm', function ($query) {
+//             $query->where('owner_id', Auth::id());
+//         })
+//         ->first();
+
+//     $dormFee = $reservation ? $reservation->dorm->price : 0;
+
+//   $amenityFees = \App\Models\Amenities::whereIn('id', $this->selectedAmenities)->sum('price');
+//     $this->monthly_fee = $dormFee + $amenityFees;
+// }
+
+public function updatedSelectedAmenities()
+{
+    $reservation = Reserve_Slot::where('status', 'approved')
+        ->whereHas('user', function ($query) {
+            $query->where('name', $this->fullname);
+        })
+        ->whereHas('dorm', function ($query) {
+            $query->where('owner_id', Auth::id());
+        })
+        ->first();
+
+    $dormFee = $reservation ? $reservation->dorm->price : 0;
+
+    // Fetch the amenities as models and calculate the sum of their price
+    $amenityFees = \App\Models\Amenities::whereIn('id', $this->selectedAmenities)->sum('price');
+
+    // Set the monthly fee
+    $this->monthly_fee = $dormFee + $amenityFees;
+}
+
     public function render()
     {
 
@@ -35,34 +81,108 @@ class Tenant extends Component
         ]);
     }
 
+    // public function updatedFullname($value)
+    // {
+    //     $reservation = Reserve_Slot::where('status', 'approved')
+    //         ->whereHas('user', function ($query) use ($value) {
+    //             $query->where('name', $value);
+    //         })
+    //         ->whereHas('dorm', function ($query) {
+    //             $query->where('owner_id', Auth::id());
+    //         })
+    //         ->first();
+
+    //     if ($reservation) {
+    //         $this->age = $reservation->user->age;
+    //         $this->phone_number = $reservation->user->contact_number;
+    //         $this->monthly_fee = $reservation->dorm->price;
+    //         $this->room_number = $reservation->dorm->name;
+    //         $this->errorMessage = '';
+    //     } else {
+    //         $this->phone_number = '';
+    //         $this->monthly_fee = '';
+    //         $this->room_number = '';
+    //         $this->errorMessage = 'No tenant found with the given name.';
+    //     }
+    // }
+
     public function updatedFullname($value)
-    {
-        $reservation = Reserve_Slot::where('status', 'approved')
-            ->whereHas('user', function ($query) use ($value) {
-                $query->where('name', $value);
-            })
-            ->whereHas('dorm', function ($query) {
-                $query->where('owner_id', Auth::id());
-            })
-            ->first();
+{
+    $reservation = Reserve_Slot::where('status', 'approved')
+        ->whereHas('user', function ($query) use ($value) {
+            $query->where('name', $value);
+        })
+        ->whereHas('dorm', function ($query) {
+            $query->where('owner_id', Auth::id());
+        })
+        ->first();
 
-        if ($reservation) {
-            $this->age = $reservation->user->age;
-            $this->phone_number = $reservation->user->contact_number;
-            $this->monthly_fee = $reservation->dorm->price;
-            $this->room_number = $reservation->dorm->name;
-            $this->errorMessage = '';
-        } else {
-            $this->phone_number = '';
-            $this->monthly_fee = '';
-            $this->room_number = '';
-            $this->errorMessage = 'No tenant found with the given name.';
-        }
+    if ($reservation) {
+        $this->age = $reservation->user->age;
+        $this->phone_number = $reservation->user->contact_number;
+        $this->room_number = $reservation->dorm->name;
+
+
+        $this->selectedAmenities = is_array($reservation->amenities_ids)
+            ? $reservation->amenities_ids
+            : json_decode($reservation->amenities_ids, true);
+
+
+        $dormFee = $reservation->dorm->price;
+        $amenityFees = \App\Models\Amenities::whereIn('id', $this->selectedAmenities)->sum('price');
+
+        $this->monthly_fee = $dormFee + $amenityFees;
+        $this->errorMessage = '';
+    } else {
+        $this->age = '';
+        $this->phone_number = '';
+        $this->room_number = '';
+        $this->monthly_fee = '';
+        $this->errorMessage = 'No tenant found with the given name.';
     }
-
-public function load(){
-$this->render();
 }
+
+
+// public function load(){
+// $this->render();
+// }
+
+public function load()
+{
+    $reservation = Reserve_Slot::where('status', 'approved')
+        ->whereHas('user', function ($query) {
+            $query->where('name', $this->fullname);
+        })
+        ->whereHas('dorm', function ($query) {
+            $query->where('owner_id', Auth::id());
+        })
+        ->first();
+
+    if ($reservation) {
+        $this->age = $reservation->user->age;
+        $this->phone_number = $reservation->user->contact_number;
+        $this->room_number = $reservation->dorm->name;
+
+        // Convert stored amenities_ids (assuming it's JSON or array)
+        $this->selectedAmenities = is_array($reservation->amenities_ids)
+            ? $reservation->amenities_ids
+            : json_decode($reservation->amenities_ids, true);
+
+        // Fetch the amenities models based on selected amenities
+        $this->reservedAmenities = \App\Models\Amenities::whereIn('id', $this->selectedAmenities)->get();
+
+        // Calculate monthly fee
+        $dormFee = $reservation->dorm->price;
+        $amenityFees = $this->reservedAmenities->sum('price'); // sum of the price attribute from the models
+
+        $this->monthly_fee = $dormFee + $amenityFees;
+        $this->errorMessage = '';
+    } else {
+        $this->errorMessage = 'No tenant found with the given name.';
+        $this->reservedAmenities = [];
+    }
+}
+
     public function addTenant()
     {
         $this->validate();

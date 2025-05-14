@@ -1,7 +1,7 @@
 <?php
 
 namespace App\Livewire\Owner;
-
+use App\Models\Amenities as Amenity;
 use App\Models\Reserve_Slot;
 use App\Models\Dormitory;
 use Livewire\Component;
@@ -10,7 +10,8 @@ use Livewire\WithPagination;
 class Tenantlist extends Component
 {
     use WithPagination;
-
+public $showAmenitiesModal = false;
+public $selectedAmenities = [];
     public function render()
     {
         $ownerId = auth()->id(); // Assuming the owner is authenticated
@@ -26,7 +27,19 @@ class Tenantlist extends Component
             'reservations' => $reservations,
         ]);
     }
+public function showAmenities($reservationId)
+{
+    $reservation = Reserve_Slot::find($reservationId);
 
+    if ($reservation && $reservation->amenities_ids) {
+        $amenityIds = json_decode($reservation->amenities_ids, true);
+        $this->selectedAmenities = Amenity::whereIn('id', $amenityIds)->get();
+    } else {
+        $this->selectedAmenities = [];
+    }
+
+    $this->showAmenitiesModal = true;
+}
     public function approveReservation($reservationId)
     {
         $reservation = Reserve_Slot::find($reservationId);
@@ -39,15 +52,33 @@ class Tenantlist extends Component
         }
     }
 
+    // public function declineReservation($reservationId)
+    // {
+    //     $reservation = Reserve_Slot::find($reservationId);
+
+    //     if ($reservation) {
+    //         $reservation->status = 'declined';
+    //         $reservation->save();
+
+    //         session()->flash('message', 'Reservation declined successfully!');
+    //     }
+    // }
+
     public function declineReservation($reservationId)
-    {
-        $reservation = Reserve_Slot::find($reservationId);
+{
+    $reservation = Reserve_Slot::find($reservationId);
 
-        if ($reservation) {
-            $reservation->status = 'declined';
-            $reservation->save();
+    if ($reservation && $reservation->status !== 'declined') {
+        $reservation->status = 'declined';
+        $reservation->save();
 
-            session()->flash('message', 'Reservation declined successfully!');
+
+        if ($reservation->dorm) {
+            $reservation->dorm->increment('slot', $reservation->slot);
         }
+
+        session()->flash('message', 'Reservation declined and slot restored.');
     }
+}
+
 }
